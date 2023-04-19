@@ -23,17 +23,17 @@ initDB();
 initProd(app);
 initRateLimit(app);
 
-// Create session
+
 app.use(
   session({
     // Used to compute a hash
-    secret: process.env.SESSION_KEY!,
+    secret:"AIzaSyA5o3lO8OCGJm53HWNW8gn49fAwJPnJxhQ",
     resave: false,
     saveUninitialized: false,
     // cookie: { secure: true } when using HTTPS
     // Store session on DB
     store: MongoStore.create({
-      mongoUrl: process.env.MONGO_URI || "mongodb://localhost:27017/test",
+      mongoUrl: process.env.MONGO_URI || "mongodb+srv://Elearning:Elearning@cluster0.smqolzo.mongodb.net/?retryWrites=true&w=majority",
     }),
   })
 );
