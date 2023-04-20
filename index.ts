@@ -4,6 +4,7 @@ import session from "express-session";
 import MongoStore from "connect-mongo";
 import bodyParser from "body-parser";
 import express from "express";
+import swaggerDocs from "./utils/swagger";
 
 import { initProd } from "@startup/prod";
 import { initDB } from "@startup/db";
@@ -13,7 +14,7 @@ import { initPassportJS } from "@startup/passport";
 import { initRoutes } from "@routes/index";
 import { initRateLimit } from "@startup/rate-limit";
 
-const port = process.env.PORT || 3900;
+const port = 3900;
 const app = express();
 
 initPassportJS();
@@ -38,6 +39,7 @@ app.use(
   })
 );
 
+
 // Parse incoming request bodies in a middleware before your handlers, available under the req.body property.
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -46,5 +48,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 initRoutes(app);
+swaggerDocs(app,port);
 
 app.listen(port, () => winston.info(`Listening on port ${port}...`));
