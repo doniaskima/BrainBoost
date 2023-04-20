@@ -1,8 +1,8 @@
 import sgMail from "@sendgrid/mail";
-const host = process.env.HOST;
-const sendingEmail = process.env.SENDING_EMAIL;
+const host ="localhost:3000";
+const sendingEmail = "doniaskima344@gmail.com";
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
+sgMail.setApiKey("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");
 
 export const createResetPasswordEmail = (
   receiverEmail: string,
