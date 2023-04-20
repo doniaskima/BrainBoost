@@ -6,6 +6,7 @@ import { validateEmail, validateLoginInput, validatePassword } from "@validation
 import dayjs from "dayjs";
 
 import { UserDocument } from "@models/user.model";
+import { User } from "@models/user.model";
 import UserService from "@services/user.service";
 import TokenService from "@services/token.service";
 import LoggerService from "@services/logger.service";
