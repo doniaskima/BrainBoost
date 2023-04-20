@@ -1,7 +1,6 @@
 import sgMail from "@sendgrid/mail";
 const host ="localhost:3000";
 const sendingEmail = "doniaskima344@gmail.com";
-
 sgMail.setApiKey("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");
 
 export const createResetPasswordEmail = (
@@ -47,6 +46,9 @@ export const createVerificationEmail = (
 
   return email;
 };
+
+ 
+
 
 export const sendEmail = async (email: sgMail.MailDataRequired) => sgMail.send(email);
 
