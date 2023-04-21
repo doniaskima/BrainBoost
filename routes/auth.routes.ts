@@ -1,7 +1,7 @@
 import express from "express";
 import passport from "passport";
 import AuthControllers from "@controllers/auth.controllers";
-const CLIENT_URL = "http://localhost:5173";
+const CLIENT_URL = "http://localhost:5173/home";
 
 const router = express.Router();
 
@@ -42,6 +42,20 @@ router.get("/login/success", (req, res) => {
       });
     }
 });
+  
+
+ 
+ router.get("/logout", (req, res) => {
+    req.logout((err: any) => {
+      if (err) {
+        res.status(401).json({
+            success: false,
+            message: "failure",
+          });
+      }
+      res.redirect("http://localhost:5173");
+    });
+  });
   
   router.get("/login/failed", (req, res) => {
     res.status(401).json({

@@ -40,11 +40,11 @@ export function initPassportJS() {
 const GOOGLE_CLIENT_ID: string = "644639375370-tfk4cm41328shq8s5m38tsqt0d5pbaag.apps.googleusercontent.com";
 const GOOGLE_CLIENT_SECRET: string = "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";
 
-const GITHUB_CLIENT_ID: string = "your id";
-const GITHUB_CLIENT_SECRET: string = "your id";
+const GITHUB_CLIENT_ID: string = "9ffae2cd460f5a32edd2";
+const GITHUB_CLIENT_SECRET: string = "68fe874762ad0aab0dad937c6f3d45e46b2d7b28";
 
-const FACEBOOK_APP_ID: string = "your id";
-const FACEBOOK_APP_SECRET: string = "your id";
+const FACEBOOK_APP_ID: string = "5768086816629777";
+const FACEBOOK_APP_SECRET: string = "8e47751a9a71485bf896a0d8b2a16556";
 
 passport.use(
   new GoogleStrategy(
@@ -71,6 +71,9 @@ passport.use(
     }
   )
 );
+
+ 
+
 
 passport.use(
   new FacebookStrategy(
