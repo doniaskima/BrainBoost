@@ -5,6 +5,7 @@ import MongoStore from "connect-mongo";
 import bodyParser from "body-parser";
 import express from "express";
 import swaggerDocs from "./utils/swagger";
+import cors from "cors";
 
 import { initProd } from "@startup/prod";
 import { initDB } from "@startup/db";
@@ -19,10 +20,15 @@ const app = express();
 
 initPassportJS();
 initLogger();
-initCORS(app);
 initDB();
-initProd(app);
-initRateLimit(app);
+
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    methods: "GET,POST,PUT,DELETE",
+    credentials: true,
+  })
+);
 
 
 app.use(
