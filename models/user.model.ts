@@ -24,6 +24,7 @@ const userSchema = new Schema<UserDocument>({
     required: true,
     minlength: 2,
     maxlength: 50,
+    unique: true,
   },
   email: {
     type: String,

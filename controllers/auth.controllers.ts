@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import sanitize from "mongo-sanitize";
 import passport from "passport";
+import bcrypt from 'bcrypt';
 import { validateEmail, validateLoginInput, validatePassword } from "@validations/user.validation";
 
 import dayjs from "dayjs";
@@ -12,37 +13,28 @@ import TokenService from "@services/token.service";
 import LoggerService from "@services/logger.service";
 import EmailService from "@services/email.service";
 
-export const postLogin = (req: Request, res: Response, next: NextFunction) => {
+ 
+export const postLogin = async (req: Request, res: Response, next: NextFunction) => {
   const { error } = validateLoginInput(req.body);
 
-  if (error) return res.status(400).send({ message: error.details[0].message });
+  if (error) {
+    return res.status(400).send({ message: error.details[0].message });
+  }
 
-  let sanitizedInput = sanitize<{ username: string; password: string }>(req.body);
+  const user = await User.findOne({ username: req.body.username });
 
-  sanitizedInput.username = req.body.username.toLowerCase();
+  if (!user) {
+    return res.status(400).send({ message: 'Invalid email or password.' });
+  }
 
-  passport.authenticate("local", (err: Error, user: UserDocument,  info: { message: string }) => {
-    if (err) {
-      return next(err);
-    }
-    if (info && info.message === "Missing credentials") {
-      return res.status(400).send({ message: "Missing credentials" });
-    }
-    if (!user) {
-      return res.status(400).send({ message: "Invalid email or password." });
-    }
-    if (!user.isVerified)
-      return res.status(401).send({
-        message: "Your account has not been verified. Please activate your account.",
-      });
+  const validPassword = await bcrypt.compare(req.body.password, user.password);
 
-    req.login(user, (err: Error) => {
-      if (err) {
-        res.status(401).send({ message: "Authentication failed", err });
-      }
-      res.status(200).send({ message: "Login success", user: UserService.getUser(user) });
-    });
-  })(req, res, next);
+  if (!validPassword) {
+    return res.status(400).send({ message: 'Invalid email or password.' });
+  }
+
+  // Login successful
+  res.status(200).send({ message: 'Login success', user });
 };
 
 export const postLoginForgot = async (req: Request, res: Response) => {

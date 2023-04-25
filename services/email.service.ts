@@ -1,5 +1,5 @@
 import sgMail from "@sendgrid/mail";
-const host ="localhost:3000";
+const host ="localhost:5173";
 const sendingEmail = "doniaskima344@gmail.com";
 sgMail.setApiKey("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");
 

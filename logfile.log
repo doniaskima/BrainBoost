@@ -247,3 +247,53 @@
 {"level":"info","message":"Connected to mongodb+srv://Elearning:Elearning@cluster0.smqolzo.mongodb.net/?retryWrites=true&w=majority..."}
 {"level":"info","message":"Listening on port 3900..."}
 {"level":"info","message":"Connected to mongodb+srv://Elearning:Elearning@cluster0.smqolzo.mongodb.net/?retryWrites=true&w=majority..."}
+{"level":"info","message":"Listening on port 3900..."}
+{"level":"info","message":"Connected to mongodb+srv://Elearning:Elearning@cluster0.smqolzo.mongodb.net/?retryWrites=true&w=majority..."}
+{"level":"info","message":"Listening on port 3900..."}
+{"level":"info","message":"Connected to mongodb+srv://Elearning:Elearning@cluster0.smqolzo.mongodb.net/?retryWrites=true&w=majority..."}
+{"level":"error","message":"getaddrinfo ENOTFOUND ac-ukwmorv-shard-00-02.smqolzo.mongodb.net getaddrinfo ENOTFOUND ac-ukwmorv-shard-00-02.smqolzo.mongodb.net","reason":{"commonWireVersion":0,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"logicalSessionTimeoutMinutes":null,"maxElectionId":"7fffffff0000000000000058","maxSetVersion":3,"servers":{},"setName":"atlas-t9ye12-shard-0","stale":false,"type":"ReplicaSetNoPrimary"},"stack":"MongoServerSelectionError: getaddrinfo ENOTFOUND ac-ukwmorv-shard-00-02.smqolzo.mongodb.net\n    at Timeout._onTimeout (C:\\Users\\donia\\Desktop\\elearning-front\\node_modules\\mongodb\\src\\sdam\\topology.ts:564:30)\n    at listOnTimeout (node:internal/timers:569:17)\n    at processTimers (node:internal/timers:512:7)"}
+{"level":"error","message":"getaddrinfo ENOTFOUND ac-ukwmorv-shard-00-02.smqolzo.mongodb.net getaddrinfo ENOTFOUND ac-ukwmorv-shard-00-02.smqolzo.mongodb.net","reason":{"commonWireVersion":0,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"logicalSessionTimeoutMinutes":null,"maxElectionId":"7fffffff0000000000000058","maxSetVersion":3,"servers":{},"setName":"atlas-t9ye12-shard-0","stale":false,"type":"ReplicaSetNoPrimary"},"stack":"MongoServerSelectionError: getaddrinfo ENOTFOUND ac-ukwmorv-shard-00-02.smqolzo.mongodb.net\n    at Timeout._onTimeout (C:\\Users\\donia\\Desktop\\elearning-front\\node_modules\\mongodb\\src\\sdam\\topology.ts:564:30)\n    at listOnTimeout (node:internal/timers:569:17)\n    at processTimers (node:internal/timers:512:7)"}
+{"level":"info","message":"Listening on port 3900..."}
+{"level":"info","message":"Connected to mongodb+srv://Elearning:Elearning@cluster0.smqolzo.mongodb.net/?retryWrites=true&w=majority..."}
+{"level":"info","message":"Listening on port 3900..."}
+{"level":"info","message":"Connected to mongodb+srv://Elearning:Elearning@cluster0.smqolzo.mongodb.net/?retryWrites=true&w=majority..."}
+{"level":"info","message":"Listening on port 3900..."}
+{"level":"info","message":"Connected to mongodb+srv://Elearning:Elearning@cluster0.smqolzo.mongodb.net/?retryWrites=true&w=majority..."}
+{"level":"info","message":"Listening on port 3900..."}
+{"level":"info","message":"Connected to mongodb+srv://Elearning:Elearning@cluster0.smqolzo.mongodb.net/?retryWrites=true&w=majority..."}
+{"level":"info","message":"Listening on port 3900..."}
+{"level":"info","message":"Connected to mongodb+srv://Elearning:Elearning@cluster0.smqolzo.mongodb.net/?retryWrites=true&w=majority..."}
+{"level":"info","message":"Listening on port 3900..."}
+{"level":"info","message":"Connected to mongodb+srv://Elearning:Elearning@cluster0.smqolzo.mongodb.net/?retryWrites=true&w=majority..."}
+{"level":"info","message":"Listening on port 3900..."}
+{"level":"info","message":"Connected to mongodb+srv://Elearning:Elearning@cluster0.smqolzo.mongodb.net/?retryWrites=true&w=majority..."}
+{"level":"info","message":"Listening on port 3900..."}
+{"level":"info","message":"Listening on port 3900..."}
+{"level":"info","message":"Listening on port 3900..."}
+{"level":"info","message":"Connected to mongodb+srv://Elearning:Elearning@cluster0.smqolzo.mongodb.net/?retryWrites=true&w=majority..."}
+{"level":"info","message":"Listening on port 3900..."}
+{"level":"info","message":"Connected to mongodb+srv://Elearning:Elearning@cluster0.smqolzo.mongodb.net/?retryWrites=true&w=majority..."}
+{"level":"info","message":"Listening on port 3900..."}
+{"level":"info","message":"Connected to mongodb+srv://Elearning:Elearning@cluster0.smqolzo.mongodb.net/?retryWrites=true&w=majority..."}
+{"level":"info","message":"Listening on port 3900..."}
+{"level":"info","message":"Connected to mongodb+srv://Elearning:Elearning@cluster0.smqolzo.mongodb.net/?retryWrites=true&w=majority..."}
+{"level":"info","message":"Listening on port 3900..."}
+{"level":"info","message":"Connected to mongodb+srv://Elearning:Elearning@cluster0.smqolzo.mongodb.net/?retryWrites=true&w=majority..."}
+{"level":"info","message":"Listening on port 3900..."}
+{"level":"info","message":"Connected to mongodb+srv://Elearning:Elearning@cluster0.smqolzo.mongodb.net/?retryWrites=true&w=majority..."}
+{"level":"info","message":"Listening on port 3900..."}
+{"level":"info","message":"Listening on port 3900..."}
+{"level":"info","message":"Connected to mongodb+srv://Elearning:Elearning@cluster0.smqolzo.mongodb.net/?retryWrites=true&w=majority..."}
+{"level":"info","message":"Listening on port 3900..."}
+{"level":"info","message":"Connected to mongodb+srv://Elearning:Elearning@cluster0.smqolzo.mongodb.net/?retryWrites=true&w=majority..."}
+{"level":"info","message":"Listening on port 3900..."}
+{"level":"info","message":"Connected to mongodb+srv://Elearning:Elearning@cluster0.smqolzo.mongodb.net/?retryWrites=true&w=majority..."}
+{"body":"{\r\n      \"username\":\"Donia Skima\",\r\n    \"password\":\"Doniabacamath2021\",\r\n        \"email\":\"doniaskima3441@gmail.com\",\r\n}","expose":true,"level":"error","message":"Unexpected token } in JSON at position 118 Unexpected token } in JSON at position 118","stack":"SyntaxError: Unexpected token } in JSON at position 118\n    at JSON.parse (<anonymous>)\n    at parse (C:\\Users\\donia\\Desktop\\elearning-front\\node_modules\\body-parser\\lib\\types\\json.js:92:19)\n    at C:\\Users\\donia\\Desktop\\elearning-front\\node_modules\\body-parser\\lib\\read.js:128:18\n    at AsyncResource.runInAsyncScope (node:async_hooks:204:9)\n    at invokeCallback (C:\\Users\\donia\\Desktop\\elearning-front\\node_modules\\raw-body\\index.js:238:16)\n    at done (C:\\Users\\donia\\Desktop\\elearning-front\\node_modules\\raw-body\\index.js:227:7)\n    at IncomingMessage.onEnd (C:\\Users\\donia\\Desktop\\elearning-front\\node_modules\\raw-body\\index.js:287:7)\n    at IncomingMessage.emit (node:events:513:28)\n    at endReadableNT (node:internal/streams/readable:1359:12)\n    at processTicksAndRejections (node:internal/process/task_queues:82:21)","status":400,"statusCode":400,"type":"entity.parse.failed"}
+{"level":"info","message":"Listening on port 3900..."}
+{"level":"info","message":"Connected to mongodb+srv://Elearning:Elearning@cluster0.smqolzo.mongodb.net/?retryWrites=true&w=majority..."}
+{"level":"info","message":"Listening on port 3900..."}
+{"level":"info","message":"Connected to mongodb+srv://Elearning:Elearning@cluster0.smqolzo.mongodb.net/?retryWrites=true&w=majority..."}
+{"level":"info","message":"Listening on port 3900..."}
+{"level":"info","message":"Connected to mongodb+srv://Elearning:Elearning@cluster0.smqolzo.mongodb.net/?retryWrites=true&w=majority..."}
+{"level":"info","message":"Listening on port 3900..."}
+{"level":"info","message":"Connected to mongodb+srv://Elearning:Elearning@cluster0.smqolzo.mongodb.net/?retryWrites=true&w=majority..."}
