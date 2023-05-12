@@ -1,6 +1,8 @@
 import { Request , Response } from "express";
-import { Group } from "@models/group.model";
+
+import {Group} from "../models/group.model"
 import User from "@models/user.model";
+ 
 
 const randomCode = (): number => Math.floor(Math.random() * (1000 - 1) + 1);
 
