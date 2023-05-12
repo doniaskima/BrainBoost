@@ -1,6 +1,5 @@
 import { Request , Response } from "express";
-
-import {Group} from "../models/group.model"
+import { Group } from "@models/group.model";
 import User from "@models/user.model";
 
 const randomCode = (): number => Math.floor(Math.random() * (1000 - 1) + 1);
@@ -26,8 +25,7 @@ const createGroup = async (req:Request,res:Response):Promise<Response>=>{
             group:groupInfo,
           })
     }
-      return res.json({ status: false, message: "user not found" });
-
+    return res.json({ status: false, message: "user not found" });
 }
 
 const fetchAllPublicGroups = (req:Request, res:Response):void=>{
@@ -38,3 +36,16 @@ const fetchAllPublicGroups = (req:Request, res:Response):void=>{
         return res.json({status:false, message: err.message});
     });
 };
+
+const fetchMembers = async (req: Request, res: Response): Promise<Response> => {
+const {groupId}= req.params;
+const group = await Group.findById(groupId);
+if(group){
+    const members= await User.find(
+        {_id:{$in:group.members}},
+        "_id name email"
+    );
+     return res.json({status:true,members})
+}
+return res.json({status:false,message:"Invalid group id "})
+}
