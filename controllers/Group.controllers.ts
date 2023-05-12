@@ -51,3 +51,32 @@ if(group){
 }
 return res.json({status:false,message:"Invalid group id "})
 }
+
+
+const addMember = async (req: Request, res: Response): Promise<Response> => {
+    const {memberEmail,groupId}= req.body;
+    const user = await User.findOne({email:memberEmail});
+    if(user){
+        const group = await Group.findById(groupId);
+        if(group){
+            group.members.push(user._id);
+            await group.save();
+            user.groups.push(groupId);
+            await user.save();
+            return res.json({
+                status:true,
+                message:"added to group"
+            });
+        }
+        return res.json({
+            status:false,
+            message:"invalid group id",
+            memberInfo: null,
+        });
+    }
+    return res.json({
+        status:false,
+        message:"User not found",
+        memberInfo:null,
+    })
+}
