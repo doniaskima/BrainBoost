@@ -1,4 +1,4 @@
-import { model, Schema, Document } from "mongoose";
+import mongoose,{ model, Schema, Document } from "mongoose";
 import { omit } from "ramda";
 import bcrypt from "bcryptjs";
 import dayjs from "dayjs";
@@ -12,6 +12,9 @@ export interface UserDocument extends Document {
   isVerified: boolean;
   isAdmin: boolean;
   expires?: Date;
+  chats:Array<mongoose.Types.ObjectId>
+  savedMessage:Array<mongoose.Types.ObjectId>
+  groups:Array<mongoose.Types.ObjectId>;
 
   comparePassword(password: string): boolean;
   hidePassword(): void;
@@ -51,6 +54,13 @@ const userSchema = new Schema<UserDocument>({
     default: false,
     required: true,
   },
+  chats:[{type:mongoose.Types.ObjectId,ref:"User"}],
+  groups:[{type:mongoose.Types.ObjectId , ref:"Group"}],
+  savedMessage:[
+    {
+      type:mongoose.Schema.Types.ObjectId, ref:"SavedMessage"
+    }
+  ],
   expires: { type: Date, default: dayjs().toDate(), expires: 43200 },
 });
 
