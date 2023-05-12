@@ -3,7 +3,9 @@ import { Request , Response } from "express";
 import {Group} from "../models/group.model"
 import User from "@models/user.model";
  
-
+interface MyError  {
+    message: string;
+  }
 const randomCode = (): number => Math.floor(Math.random() * (1000 - 1) + 1);
 
 const createGroup = async (req:Request,res:Response):Promise<Response>=>{
@@ -80,3 +82,53 @@ const addMember = async (req: Request, res: Response): Promise<Response> => {
         memberInfo:null,
     })
 }
+
+const updateGroup = async (req: Request, res: Response): Promise<Response> => {
+      const { groupId, name, description, isPublic } = req.body;
+      const group = await Group.findById(groupId);
+      if (group) {
+        group.name = name;
+        group.description = description;
+        group.isPublic = isPublic;
+        await group.save();
+        return res.json({ status: true, message: "group updated" });
+      }
+      return res.json({ status: false, message: "Invalid group id" });
+};
+
+
+  const removeMember = async (req: Request, res: Response): Promise<Response> => {
+    try{
+        const { groupId, memberId } = req.body;
+        const group = await Group.findById(groupId);
+        const user = await User.findById(memberId);
+        let index = group?.members.indexOf(memberId);
+        group?.members.slice(index,1);
+        index = user?.groups.indexOf(groupId);
+        user?.groups.slice(index,1);
+        await user?.save();
+        await group?.save();
+        return res.json({ status: true, message: "member removed" });
+    } catch (err) {
+        console.log(err);
+      }
+  }
+
+
+  const deleteGroup = async(req:Request,res:Response): Promise<Response> => {
+    const {groupId} = req.params;
+    const group= await Group.findById(groupId);
+    if(group){
+        await User.updateMany(
+            {
+                _id:{
+                    $in:group.members
+                }
+            },
+            {
+                $pull : {groups:group._id}
+            },
+        );
+       /////DELETE MESSAGES 
+    }
+  }
