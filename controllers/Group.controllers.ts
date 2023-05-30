@@ -9,7 +9,7 @@ interface Error  {
 
 const randomCode = (): number => Math.floor(Math.random() * (1000 - 1) + 1);
 
-const createGroup = async (req:Request,res:Response):Promise<Response>=>{
+export const createGroup = async (req:Request,res:Response):Promise<Response>=>{
     const {adminId,groupName,isPublic,description}= req.body;
     const user = await User.findById(adminId);
     if(user){
@@ -33,7 +33,7 @@ const createGroup = async (req:Request,res:Response):Promise<Response>=>{
     return res.json({ status: false, message: "user not found" });
 }
 
-const fetchAllPublicGroups = (req:Request, res:Response):void=>{
+export const fetchAllPublicGroups = (req:Request, res:Response):void=>{
     Group.find({isPublic:true},"name _id description").then((groups)=>{
         return res.json({status:true,groups})
     }).catch((err)=>{
@@ -42,7 +42,7 @@ const fetchAllPublicGroups = (req:Request, res:Response):void=>{
     });
 };
 
-const fetchMembers = async (req: Request, res: Response): Promise<Response> => {
+export const fetchMembers = async (req: Request, res: Response): Promise<Response> => {
 const {groupId}= req.params;
 const group = await Group.findById(groupId);
 if(group){
@@ -56,7 +56,7 @@ return res.json({status:false,message:"Invalid group id "})
 }
 
 
-const addMember = async (req: Request, res: Response): Promise<Response> => {
+export const addMember = async (req: Request, res: Response): Promise<Response> => {
     const {memberEmail,groupId}= req.body;
     const user = await User.findOne({email:memberEmail});
     if(user){
@@ -84,7 +84,7 @@ const addMember = async (req: Request, res: Response): Promise<Response> => {
     })
 }
 
-const updateGroup = async (req: Request, res: Response): Promise<Response> => {
+export const updateGroup = async (req: Request, res: Response): Promise<Response> => {
       const { groupId, name, description, isPublic } = req.body;
       const group = await Group.findById(groupId);
       if (group) {
@@ -98,7 +98,7 @@ const updateGroup = async (req: Request, res: Response): Promise<Response> => {
 };
 
 
-  const removeMember = async (req: Request, res: Response): Promise<Response> => {
+ export const removeMember = async (req: Request, res: Response): Promise<Response> => {
     try{
         const { groupId, memberId } = req.body;
         const group = await Group.findById(groupId);
@@ -116,7 +116,7 @@ const updateGroup = async (req: Request, res: Response): Promise<Response> => {
       }
   }
 
-const deleteGroup  = async (req:Request , res:Response)=>{
+export const deleteGroup  = async (req:Request , res:Response)=>{
     const {groupId} = req.params;
     const group = await Group.findById(groupId);
     if(group){
@@ -145,13 +145,4 @@ const deleteGroup  = async (req:Request , res:Response)=>{
 }
 
 
-module.exports = {
-    fetchAllPublicGroups,
-    createGroup,
-    fetchMembers,
-    removeMember,
-    addMember,
-    updateGroup,
-    deleteGroup,
-  };
-  
+ 

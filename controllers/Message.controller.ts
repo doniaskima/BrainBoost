@@ -16,7 +16,7 @@ const encrypt = (message: string) => {
   };
 };
 
-const createMessage = async (senderId: string, receiverEmail: string, message: string) => {
+export const createMessage = async (senderId: string, receiverEmail: string, message: string) => {
   let info = null;
   let isNewRecipient = false;
   const user = await User.findOne({ _id: senderId }).catch((err: Error) => {
@@ -56,7 +56,7 @@ const createMessage = async (senderId: string, receiverEmail: string, message: s
   return { info, isNewRecipient };
 };
 
-const createGroupMessage = async (senderId: string, groupId: string, message: string) => {
+export const createGroupMessage = async (senderId: string, groupId: string, message: string) => {
   let info = null;
   const user = await User.findOne({ _id: senderId }).catch((err: Error) => {
     console.log(err);
@@ -86,7 +86,7 @@ const createGroupMessage = async (senderId: string, groupId: string, message: st
 };
 
 
-const startMessage = async (senderId: string, receiverEmail: string): Promise<boolean | null> => {
+export const startMessage = async (senderId: string, receiverEmail: string): Promise<boolean | null> => {
     const user = await User.findOne({ _id: senderId });
     if (user) {
       const receiver = await User.findOne({ email: receiverEmail });
@@ -105,5 +105,30 @@ const startMessage = async (senderId: string, receiverEmail: string): Promise<bo
       }
     }
     return null;
+};
+  
+export const deleteMessageById =(req:any,res:any):void=>{
+    const {messageId} = req.params;
+    Message.findByIdAndDelete(messageId)
+    .then(()=>{
+        return res.json({status:false,message:"message deleted"});
+    })
+    .catch((err:Error)=>{
+        console.log(err);
+        return res.json({ status: false, message: err.message })
+    })
+}
+
+export const deleteMessages = async (senderId: string, receiverId: string): Promise<boolean> => {
+    try {
+      await Message.deleteMany({ sender: senderId, receiver: receiverId });
+      await Message.deleteMany({ receiver: senderId, sender: receiverId });
+      return true;
+    } catch (err) {
+      console.log(err);
+      return false;
+    }
   };
   
+
+ 
