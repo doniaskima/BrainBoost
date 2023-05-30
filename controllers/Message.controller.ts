@@ -84,3 +84,26 @@ const createGroupMessage = async (senderId: string, groupId: string, message: st
   }
   return info;
 };
+
+
+const startMessage = async (senderId: string, receiverEmail: string): Promise<boolean | null> => {
+    const user = await User.findOne({ _id: senderId });
+    if (user) {
+      const receiver = await User.findOne({ email: receiverEmail });
+      if (receiver) {
+        if (!user.chats.includes(receiver._id) && user._id !== receiver._id) {
+          user.chats.push(receiver._id);
+          try {
+            await user.save();
+            return true;
+          } catch (error) {
+            return null;
+          }
+        }
+      } else {
+        return null;
+      }
+    }
+    return null;
+  };
+  
