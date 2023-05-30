@@ -1,34 +1,37 @@
-import mongoose , {Schema , Document} from "mongoose";
-
+import mongoose, { Schema, Document } from "mongoose";
 
 interface ISavedMessage extends Document {
-    owner:mongoose.Schema.Types.ObjectId;
-    message:string;
-    iv:string;
-    key:string;
+  owner: mongoose.Schema.Types.ObjectId;
+  message: string;
+  iv: string;
+  key: string;
 }
 
-const savedMessage = new Schema<ISavedMessage>(
-    {
-       owner:{
-        type:Schema.Types.ObjectId,
-       },
-       message:{
-        type:String,
-        required:true,
-       },
-       key:{
-        type:String,
-        required:true
-       },
-       iv:{
-        type:String,
-        required:true
-       }  
+const savedMessageSchema: Schema = new Schema(
+  {
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
     },
-    {timestamps:true}
+    message: {
+      type: String,
+      required: true,
+    },
+    iv: {
+      type: String,
+      required: true,
+    },
+    key: {
+      type: String,
+      required: true,
+    },
+  },
+  { timestamps: true }
 );
 
-const SaveMsg = mongoose.model<ISavedMessage>("savedmessages",savedMessage);
+const SavedMessage = mongoose.model<ISavedMessage>(
+  "savedMessages",
+  savedMessageSchema
+);
 
-export default SaveMsg ;
+export default SavedMessage;
