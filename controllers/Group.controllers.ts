@@ -3,9 +3,10 @@ import Message from "@models/message.model";
 import {Group} from "../models/group.model"
 import User from "@models/user.model";
  
-interface MyError  {
+interface Error  {
     message: string;
-  }
+}
+
 const randomCode = (): number => Math.floor(Math.random() * (1000 - 1) + 1);
 
 const createGroup = async (req:Request,res:Response):Promise<Response>=>{
@@ -114,25 +115,43 @@ const updateGroup = async (req: Request, res: Response): Promise<Response> => {
         return res.json({ status: false, message: "Invalid groupMember id" });
       }
   }
-const deleteGroup = async (req:Request ,res:Response):Promise<Response>=>{
+
+const deleteGroup  = async (req:Request , res:Response)=>{
     const {groupId} = req.params;
     const group = await Group.findById(groupId);
     if(group){
         await User.updateMany(
             {
-                _id : {$in : group.members},
+                _id : {$in : group.members}
             },
             {
-                $pull : {groups:group._id}
+                $pull : {
+                    groups : group._id
+                }
             }
-        )
-        await Message.deleteMany({receiver:group._id})
+        );
+        await Message.deleteMany({receiver:group._id});
+        Group.deleteOne({_id:groupId})
         .then(()=>{
-            return res.json({status:true,message:"group deleted sucessfully"})
+            return res.json({status:false , message:"group deleted" });
         })
-        .catch((err)=>{
+        .catch((err:Error)=>{
             console.log(err);
-            return res.status(500).json({status:false, message:err.message})
+            return res.status(500).json({ status: false, message: err.message });
         })
+    
     }
+
 }
+
+
+module.exports = {
+    fetchAllPublicGroups,
+    createGroup,
+    fetchMembers,
+    removeMember,
+    addMember,
+    updateGroup,
+    deleteGroup,
+  };
+  
