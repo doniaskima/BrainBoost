@@ -1,5 +1,5 @@
 import { Request , Response } from "express";
-
+import Message from "@models/message.model";
 import {Group} from "../models/group.model"
 import User from "@models/user.model";
  
@@ -111,24 +111,28 @@ const updateGroup = async (req: Request, res: Response): Promise<Response> => {
         return res.json({ status: true, message: "member removed" });
     } catch (err) {
         console.log(err);
+        return res.json({ status: false, message: "Invalid groupMember id" });
       }
   }
-
-
-  const deleteGroup = async(req:Request,res:Response): Promise<Response> => {
+const deleteGroup = async (req:Request ,res:Response):Promise<Response>=>{
     const {groupId} = req.params;
-    const group= await Group.findById(groupId);
+    const group = await Group.findById(groupId);
     if(group){
         await User.updateMany(
             {
-                _id:{
-                    $in:group.members
-                }
+                _id : {$in : group.members},
             },
             {
                 $pull : {groups:group._id}
-            },
-        );
-       /////DELETE MESSAGES 
+            }
+        )
+        await Message.deleteMany({receiver:group._id})
+        .then(()=>{
+            return res.json({status:true,message:"group deleted sucessfully"})
+        })
+        .catch((err)=>{
+            console.log(err);
+            return res.status(500).json({status:false, message:err.message})
+        })
     }
-  }
+}
