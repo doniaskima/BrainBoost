@@ -145,4 +145,13 @@ export const deleteGroup  = async (req:Request , res:Response)=>{
 }
 
 
- 
+module.exports = {
+    fetchAllPublicGroups,
+    createGroup,
+    fetchMembers,
+    removeMember,
+    addMember,
+    updateGroup,
+    deleteGroup,
+  };
+  

@@ -3,7 +3,7 @@ import Message from "../models/message.model";
 import User from "../models/user.model";
 import crypto from "crypto";
 
-const encrypt = (message: string) => {
+export const encrypt = (message: string) => {
   const key = crypto.randomBytes(32);
   const iv = crypto.randomBytes(16);
   let cipher = crypto.createCipheriv("aes-256-cbc", Buffer.from(key), iv);

@@ -1,12 +1,13 @@
 import { Request, Response } from "express";
-
+import { deleteMessages,encrypt } from "./Message.controller";
 import sanitize from "mongo-sanitize";
 import { validateEmail, validateRegisterInput } from "@validations/user.validation";
-
+import User from "@models/user.model";
 import UserService from "@services/user.service";
 import TokenService from "@services/token.service";
 import LoggerService from "@services/logger.service";
 import EmailService from "@services/email.service";
+import SavedMessage from "@models/savedMessage.model";
 
 // Define email address that will send the emails to your users.
 
@@ -84,8 +85,65 @@ export const postUserCancel = (req: Request, res: Response) => {
   }
 };
 
+
+const saveMessage = async (userId: string, message: string) => {
+  const user = await User.findOne({ _id: userId });
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  const encryptedMessage = encrypt(message);
+  const newSavedMessage = new SavedMessage({
+    owner: user._id,
+    message: encryptedMessage.encryptedMessage,
+    iv: encryptedMessage.iv,
+    key: encryptedMessage.key,
+  });
+  const newMessage = await newSavedMessage.save();
+  user.savedMessages.push(newMessage._id); // Update the property name here
+
+  await user.save();
+
+  let info = {
+    iv: newMessage.iv,
+    key: newMessage.key,
+    message: newMessage.message,
+    messageId: newMessage._id,
+  };
+
+  return info;
+};
+
+
+// const fetchSavedMessages = async (req: Request, res: Response) => {
+//   const { userInfo } = req;
+//   try {
+//     const data = await SavedMessage.find({
+//       _id: { $in: userInfo.savedMessages },
+//     });
+
+//     let result = [];
+//     for (const msg of data) {
+//       result.push({
+//         iv: msg.iv,
+//         key: msg.key,
+//         message: msg.message,
+//         messageId: msg._id,
+//       });
+//     }
+
+//     return res.status(200).json({ success: true, savedMessages: result });
+//   } catch (err) {
+//     console.log(err);
+//     return res.status(500).json({ success: false, message: err.message });
+//   }
+// };
+
 export default {
   getUser,
   postUser,
   postUserCancel,
+  saveMessage,
+   
 };
