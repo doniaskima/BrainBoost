@@ -1,6 +1,7 @@
 import { Router } from "express";
 import UserController from "@controllers/user.controllers";
 
+
 const router = Router();
 
 router.get("/", UserController.getUser);
@@ -45,5 +46,18 @@ router.post("/register", UserController.postUser);
 //  HTTP Success : 200 and message.
 //  HTTP Errors : 400, 404, 500.
 router.post("/register/cancel", UserController.postUserCancel);
+
+// router.route("/delete_saved_message").delete( deleteSavedMessage);
+
+ 
+router.get("/get_by_id/:userId",UserController.getById);
+router.get("/get_by_id/:userId", UserController.getById);
+router.get("/get_by_email/:email", UserController.getByEmail);
+// router.get("/recipients/:userId", UserController.fetchRecipientsByIds);
+// router.get("/groups/:userId", UserController.fetchGroupsByIds);
+// router.get("/savedMessages/:userId", UserController.fetchSavedMessages);
+// router.put("/update/:userId", UserController.updateUserDetails);
+// router.delete("/deleteRecipient", UserController.deleteRecipient);
+// router.delete("/:userId", UserController.deleteUser);
 
 export default router;

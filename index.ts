@@ -18,6 +18,9 @@ import { initRoutes } from "@routes/index";
 import { initRateLimit } from "@startup/rate-limit";
 import { createGroupMessage, createMessage, startMessage } from "@controllers/Message.controller";
 import { saveMessage } from "@controllers/user.controllers";
+import userRouter from "./routes/user.routes"
+import messageRouter from "./routes/message.routes"
+import groupRouter from "./routes/group.routes"
 
 
 const port = 3900;
@@ -60,6 +63,9 @@ app.use(passport.session());
 initRoutes(app);
 swaggerDocs(app, port);
 
+app.use("/users", userRouter);
+app.use("/messages",messageRouter);
+app.use("/groups",  groupRouter);
  
 
 let connectedUsers = new Map();
