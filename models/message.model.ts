@@ -6,6 +6,7 @@ interface IMessage extends Document {
   iv: string;
   message: string;
   key: string;
+  createdAt: Date;  
 }
 
 const messageSchema = new Schema<IMessage>(
@@ -30,6 +31,10 @@ const messageSchema = new Schema<IMessage>(
       type: String,
       required: true,
     },
+    createdAt: {
+      type: Date,
+      default: Date.now, // Set default value to current date and time
+  },
   },
   { timestamps: true }
 );

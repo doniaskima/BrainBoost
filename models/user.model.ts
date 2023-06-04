@@ -1,10 +1,11 @@
-import mongoose,{ model, Schema, Document } from "mongoose";
+import mongoose, { model, Schema, Document } from "mongoose";
 import { omit } from "ramda";
 import bcrypt from "bcryptjs";
 import dayjs from "dayjs";
 
 export interface UserDocument extends Document {
   username: string;
+  name:string;
   email: string;
   password: string;
   passwordResetToken: string;
@@ -12,9 +13,9 @@ export interface UserDocument extends Document {
   isVerified: boolean;
   isAdmin: boolean;
   expires?: Date;
-  chats:Array<mongoose.Types.ObjectId>
-  savedMessage:Array<mongoose.Types.ObjectId>
-  groups:Array<mongoose.Types.ObjectId>;
+  chats: Array<mongoose.Types.ObjectId>;
+  savedMessages: Array<mongoose.Types.ObjectId>;
+  groups: Array<mongoose.Types.ObjectId>;
 
   comparePassword(password: string): boolean;
   hidePassword(): void;
@@ -28,6 +29,11 @@ const userSchema = new Schema<UserDocument>({
     minlength: 2,
     maxlength: 50,
     unique: true,
+  },
+  name: {
+    type: String,
+    minlength: 2,
+    maxlength: 50,
   },
   email: {
     type: String,
@@ -54,12 +60,13 @@ const userSchema = new Schema<UserDocument>({
     default: false,
     required: true,
   },
-  chats:[{type:mongoose.Types.ObjectId,ref:"User"}],
-  groups:[{type:mongoose.Types.ObjectId , ref:"Group"}],
-  savedMessage:[
+  chats: [{ type: mongoose.Types.ObjectId, ref: "User" }],
+  groups: [{ type: mongoose.Types.ObjectId, ref: "Group" }],
+  savedMessages: [
     {
-      type:mongoose.Schema.Types.ObjectId, ref:"SavedMessage"
-    }
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "SavedMessage",
+    },
   ],
   expires: { type: Date, default: dayjs().toDate(), expires: 43200 },
 });

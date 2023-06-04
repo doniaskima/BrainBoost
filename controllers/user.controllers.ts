@@ -1,20 +1,23 @@
 import { Request, Response } from "express";
-import { deleteMessages,encrypt } from "./Message.controller";
+import { deleteMessages, encrypt } from "./Message.controller";
 import sanitize from "mongo-sanitize";
 import { validateEmail, validateRegisterInput } from "@validations/user.validation";
-import User from "@models/user.model";
+import User, { UserDocument } from "@models/user.model";
 import UserService from "@services/user.service";
 import TokenService from "@services/token.service";
 import LoggerService from "@services/logger.service";
 import EmailService from "@services/email.service";
 import SavedMessage from "@models/savedMessage.model";
 
-// Define email address that will send the emails to your users.
+
+interface CustomRequest extends Request {
+  userInfo?: UserDocument;
+}
 
 export const getUser = (req: Request, res: Response) => {
-  const user = req.user;
+  const user = req.user as UserDocument | null;
 
-  res.status(200).send({ message: "User info successfully retreived", user });
+  res.status(200).send({ message: "User info successfully retrieved", user });
 };
 
 export const postUser = async (req: Request, res: Response) => {
@@ -28,13 +31,13 @@ export const postUser = async (req: Request, res: Response) => {
     let user = await UserService.findUserBy("username", sanitizedInput.username.toLowerCase());
 
     if (user) {
-      return res.status(400).send({ message: "Username already taken. Take an another Username" });
+      return res.status(400).send({ message: "Username already taken. Take another Username" });
     }
 
     user = await UserService.findUserBy("email", sanitizedInput.email.toLowerCase());
 
     if (user) {
-      return res.status(400).send({ message: "Email already registered. Take an another email" });
+      return res.status(400).send({ message: "Email already registered. Take another email" });
     }
 
     const newUser = UserService.createUser(sanitizedInput);
@@ -85,8 +88,40 @@ export const postUserCancel = (req: Request, res: Response) => {
   }
 };
 
+const findUser = async (req: CustomRequest, res: Response, next: Function, userId: string) => {
+  try {
+    const user = await User.findOne({ _id: userId }).catch((err: unknown) => {
+      console.log(err);
+    });
+    if (!user) {
+      return res.status(400).json({ status: false, message: "User not found" });
+    }
+    req.userInfo = user;
+    next();
+  } catch (error:any) {
+    return res.status(400).json({ status: false, message: error.message });
+  }
+};
 
-const saveMessage = async (userId: string, message: string) => {
+const getById = (req: CustomRequest, res: Response) => {
+  const userInfo = req.userInfo as UserDocument;
+  return res
+    .status(200)
+    .json({ status: true, user: userInfo, message: "User found" });
+};
+
+const getByEmail = async (req: Request, res: Response) => {
+  const { email } = req.params;
+  const user = await User.findOne({ email: email }, "name _id email");
+  if (user) {
+    return res
+      .status(200)
+      .json({ status: true, user: user, message: "User found" });
+  }
+  return res.json({ status: false, user: null, message: "User not found" });
+};
+ 
+export const saveMessage = async (userId: string, message: string) => {
   const user = await User.findOne({ _id: userId });
 
   if (!user) {
@@ -101,49 +136,27 @@ const saveMessage = async (userId: string, message: string) => {
     key: encryptedMessage.key,
   });
   const newMessage = await newSavedMessage.save();
-  user.savedMessages.push(newMessage._id); // Update the property name here
-
+  user.savedMessages.push(newMessage._id);
   await user.save();
-
   let info = {
     iv: newMessage.iv,
     key: newMessage.key,
     message: newMessage.message,
+    createdAt: newMessage.createdAt,
     messageId: newMessage._id,
   };
-
   return info;
 };
 
+ 
 
-// const fetchSavedMessages = async (req: Request, res: Response) => {
-//   const { userInfo } = req;
-//   try {
-//     const data = await SavedMessage.find({
-//       _id: { $in: userInfo.savedMessages },
-//     });
-
-//     let result = [];
-//     for (const msg of data) {
-//       result.push({
-//         iv: msg.iv,
-//         key: msg.key,
-//         message: msg.message,
-//         messageId: msg._id,
-//       });
-//     }
-
-//     return res.status(200).json({ success: true, savedMessages: result });
-//   } catch (err) {
-//     console.log(err);
-//     return res.status(500).json({ success: false, message: err.message });
-//   }
-// };
 
 export default {
   getUser,
   postUser,
   postUserCancel,
   saveMessage,
-   
+  findUser,
+  getByEmail,
+  getById,
 };

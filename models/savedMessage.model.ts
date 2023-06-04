@@ -5,6 +5,7 @@ interface ISavedMessage extends Document {
   message: string;
   iv: string;
   key: string;
+  createdAt: Date;  
 }
 
 const savedMessageSchema: Schema = new Schema(
@@ -24,6 +25,10 @@ const savedMessageSchema: Schema = new Schema(
     key: {
       type: String,
       required: true,
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now, // Set default value to current date and time
     },
   },
   { timestamps: true }
